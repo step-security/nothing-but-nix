@@ -10,6 +10,8 @@ concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   determinate-nix-action:
     name: determinate-nix-action (${{ matrix.hatchet-protocol }}) on ${{ matrix.os }}
@@ -23,8 +25,13 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           path: ./.github/actions/this
       - name: Purge
@@ -32,7 +39,7 @@ jobs:
         with:
           hatchet-protocol: ${{ matrix.hatchet-protocol }}
           witness-carnage: true
-      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/determinate-nix-action@9adf02b41cfdac2632e1c16f0480ff5bf3b05dd6 # v3.21.1
       - name: Nix
         run: |
           nix --version
@@ -51,8 +58,13 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           path: ./.github/actions/this
       - name: Purge
@@ -61,7 +73,7 @@ jobs:
           hatchet-protocol: ${{ matrix.hatchet-protocol }}
           witness-carnage: true
           nix-permission-edict: true
-      - uses: nixbuild/nix-quick-install-action@v34
+      - uses: nixbuild/nix-quick-install-action@2c9db80fb984ceb1bcaa77cdda3fdf8cfba92035 # v34
       - name: Nix
         run: |
           nix --version
@@ -80,8 +92,13 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           path: ./.github/actions/this
       - name: Purge
@@ -90,7 +107,7 @@ jobs:
           hatchet-protocol: ${{ matrix.hatchet-protocol }}
           witness-carnage: true
           nix-permission-edict: true
-      - uses: cachix/install-nix-action@v31
+      - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
       - name: Nix
         run: |
           nix --version

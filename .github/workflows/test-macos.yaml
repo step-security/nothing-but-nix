@@ -10,6 +10,8 @@ concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   test-macos-guard-rails:
     name: Test macOS Guard Rails
@@ -19,15 +21,20 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           path: ./.github/actions/this
       - name: Test Nothing but Nix (should skip gracefully)
         uses: ./.github/actions/this
         with:
           hatchet-protocol: cleave
-      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/determinate-nix-action@9adf02b41cfdac2632e1c16f0480ff5bf3b05dd6 # v3.21.1
       - name: Verify Nix Installation
         run: |
           nix --version

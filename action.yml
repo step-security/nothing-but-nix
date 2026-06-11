@@ -475,7 +475,7 @@ runs:
         fi
     - name: The Post
       if: runner.os == 'Linux'
-      uses: step-security/post-run-action@main
+      uses: step-security/post-run-action@941715024e4a2ce253e82e705e6de5001f3b38cf # main
       with:
         shell: bash -e {0}
         post-run: |
