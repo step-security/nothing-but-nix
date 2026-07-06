@@ -1,0 +1,18 @@
+{
+   "schema_version": "1",
+   "onboarding_type": "copied",
+   "archived": false,
+   "maintained_action_name": "step-security/nothing-but-nix",
+   "upstream_full_repo_name": "wimpysworld/nothing-but-nix",
+   "action_type": "composite",
+   "last_release": {
+     "tag_name": "v10.0.0",
+     "created_at": "2026-06-12T05:47:59Z",
+     "published_at": "2026-06-12T07:57:53Z"
+   },
+   "sync": {
+     "ignore_presets": [
+       "defaults_v1"
+     ]
+   }
+ }
